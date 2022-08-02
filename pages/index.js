@@ -40,10 +40,6 @@ export default function Home() {
     setName(event.target.value);
   }
 
-  function handleChange(event) {
-    setName(event.target.value);
-  }
-
   const theUserPo = {};
 
   function editButton() {
@@ -52,13 +48,13 @@ export default function Home() {
     const inpte = document.getElementById("email");
     const inptt = document.getElementById("telephone");
     const inpty = document.getElementById("telephone");
-    tls.disabled
+    tls.disabled;
   }
 
   async function createUserButton() {
     const meme = await readUser(name);
     setUser(meme);
-    console.log(user);
+    console.log('=>', user);
   }
 
   return (
@@ -360,7 +356,7 @@ export default function Home() {
                                 className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
                                 type="text"
                                 id="name"
-                                value={user.name}
+                                value={user.NOMBRE_APELLIDO}
                                 disabled
                               />
                             </dd>
