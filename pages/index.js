@@ -8,18 +8,6 @@ export default function Home() {
   const [name, setName] = useState("");
   const [user, setUser] = useState("");
 
-  const [editApproved, setEditApproved] = useState(false);
-  const [editAttendance, setEditAttendance] = useState(false);
-  const [editCI, setEditCI] = useState("");
-  const [editEmail, setEditEmail] = useState("");
-  const [editFase, setEditFase] = useState("");
-  const [editGroup, setEditGroup] = useState("");
-  const [editName, setEditName] = useState("");
-  const [editOrdenNumber, setEditOrdenNumber] = useState("");
-  const [editPlanilla, setEditPlanilla] = useState("");
-  const [editTaller, setEdiTaller] = useState("");
-  const [editTelephone, setEditTelephone] = useState("");
-
   const [inputState, setInputState] = useState({
     approved: "",
     attendance: "",
