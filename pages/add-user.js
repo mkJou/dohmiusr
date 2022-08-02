@@ -16,9 +16,14 @@ export default function Home() {
   const [attendance, setAttendance] = useState("");
   const [appr, setAppr] = useState("");
   const [approved, setApproved] = useState(false);
+  const [observaciones, setObservaciones] = useState("")
 
   function handleChangeName(event) {
     setName(event.target.value);
+  }
+
+  function handleChangeObservaciones(event) {
+    setObservaciones(event.target.value);
   }
 
   function handleChangeCI(event) {
@@ -78,7 +83,8 @@ export default function Home() {
       ordenNumber,
       planilla,
       taller,
-      telephone
+      telephone,
+      observaciones
     );
 
     console.log(exect);
@@ -364,17 +370,40 @@ export default function Home() {
                             autoComplete="country-name"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           >
-                            <option value="pizzeria">TALLER DE PIZZERIA</option>
-                            <option value="pastas">
+                            {/**
+                             * FRITURA ZULIANA *
+                             * SALSA PARA PASTAS *
+                             * POSTRES LIGERPS *
+                             * PANADERIA COMERCIAL *
+                             * COMIDA RAPIDA
+                             * ASISTENTE DE COCINA
+                             *
+                             */}
+                            <option value="TALLER-PIZZERIA">
+                              TALLER DE PIZZERIA
+                            </option>
+                            <option value="TALLER-PASTAS-FRESCAS">
                               TALLER DE PASTAS FRESCAS
                             </option>
-                            <option value="reposteria">REPOSTERIA</option>
-                            <option value="panaderia-comercial">
+                            <option value="TALLER-REPOSTERIA">
+                              REPOSTERIA
+                            </option>
+                            <option value="PANADERIA-COMERCIAL">
                               PANADERIA COMERCIAL
                             </option>
-                            <option value="barismo">BARISMO</option>
-                            <option value="panaderia-artesanal">
-                              PANADERIA ARTESANAL
+                            <option value="BARISMO">BARISMO</option>
+                            <option value="FRITURA-ZULIANA">
+                              FRITURA ZULIANA
+                            </option>
+                            <option value="SALSA-PASTAS">
+                              SALSA PARA PASTAS
+                            </option>
+                            <option value="POSTRES-LIGEROS">
+                              POSTRES LIGEROS
+                            </option>
+                            <option value="COMIDA-RAPIDA">COMIDA RAPIDA</option>
+                            <option value="ASISTENTE-COCINA">
+                              ASISTENTE DE COCINA
                             </option>
                           </select>
                         </div>
@@ -390,7 +419,7 @@ export default function Home() {
                             type="text"
                             name="street-address"
                             onChange={handleChangePlanilla}
-                            id="street-address"
+                            id="planilla"
                             autoComplete="street-address"
                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                           />
@@ -405,8 +434,7 @@ export default function Home() {
                           </label>
                           <input
                             type="text"
-                            name="city"
-                            id="city"
+                            id="fase"
                             onChange={handleChangeFase}
                             autoComplete="address-level2"
                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -424,7 +452,7 @@ export default function Home() {
                             type="text"
                             onChange={handleChangeGroup}
                             name="region"
-                            id="region"
+                            id="group"
                             autoComplete="address-level1"
                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                           />
@@ -440,7 +468,7 @@ export default function Home() {
                           <input
                             type="text"
                             name="postal-code"
-                            id="postal-code"
+                            id="orden_number"
                             onChange={handleChangeOrdenNumber}
                             autoComplete="postal-code"
                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -460,8 +488,8 @@ export default function Home() {
                             onChange={handleChangeAttendance}
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           >
-                            <option value="true">SI</option>
-                            <option value="false">NO</option>
+                            <option value={true}>SI</option>
+                            <option value={false}>NO</option>
                           </select>
                         </div>
                         <div className="col-span-6 sm:col-span-3">
@@ -482,6 +510,22 @@ export default function Home() {
                             <option value="1">INDUCCIÓN</option>
                             <option value="2">COMPLETO EL CURSO</option>
                           </select>
+                        </div>
+                        <div className="col-span-6">
+                          <label
+                            htmlFor="street-address"
+                            className="block text-sm font-medium text-gray-700"
+                          >
+                            Observaciones
+                          </label>
+                          <input
+                            type="text"
+                            name="street-address"
+                            onChange={handleChangePlanilla}
+                            id="planilla"
+                            autoComplete="street-address"
+                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          />
                         </div>
                       </div>
                     </div>

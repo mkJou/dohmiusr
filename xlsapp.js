@@ -1,12 +1,14 @@
+const firebase = require("firebase");
+require("firebase/firestore");
+
 const XLSX = require("xlsx");
-const fs = require("fs");
-const finalObject = {};
 
-myFile = "./LISTA-TOTAL.xlsx";
+const ExcelAJson = () => {
+  const excel = XLSX.readFile("uploadf1.xlsx");
 
-const data = XLSX.read(myFile, { type: "buffer" });
-data.SheetNames.forEach((sheetName) => {
-  let rowObject = XLSX.utils.sheet_to_json(data.Sheets[sheetName]);
-  console.log(rowObject);
-  finalObject[sheetName] = rowObject;
-});
+  var nameSheet = excel.SheetNames;
+  let datos = XLSX.utils.sheet_to_json(excel.Sheets[nameSheet[0]]);
+  console.log(datos)
+};
+
+ExcelAJson();
