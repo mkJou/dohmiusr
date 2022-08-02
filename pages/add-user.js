@@ -454,7 +454,7 @@ export default function Home() {
                             ¿Asistió?
                           </label>
                           <select
-                            id="taller"
+                            id="attendance"
                             name="taller"
                             autoComplete="country-name"
                             onChange={handleChangeAttendance}
