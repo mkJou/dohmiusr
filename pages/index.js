@@ -2,27 +2,64 @@ import Head from "next/head";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
-import { createUser, readUser } from "../lib/users";
+import { Chart, ArcElement } from "chart.js";
+Chart.register(ArcElement);
+import { Pie } from "react-chartjs-2";
+
+import {
+  createUser,
+  readUser,
+  readUsersCount,
+  readUsersFalseAttendanceCount,
+  readUsersTrueAttendanceCount,
+} from "../lib/users";
 
 export default function Home() {
   const [name, setName] = useState("");
   const [user, setUser] = useState("");
 
-  const [inputState, setInputState] = useState({
-    approved: "",
-    attendance: "",
-    ci: "",
-    email: "",
-    fase: "",
-    group: "",
-    name: "",
-    orden_number: "",
-    planilla: "",
-    taller: "",
-    telephone: "",
-  });
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [chartData, setChartData] = useState({});
 
-  console.log(inputState);
+  const [totalUsersTrueAttendance, setTotalTrueUserAttendance] = useState(0);
+  const [totalUsersFalseAttendance, setTotalFalseUserAttendance] = useState(0);
+
+  const readU = async () => {
+    const result = await readUsersCount();
+    setTotalUsers(result);
+  };
+
+  const readUTrueAttendance = async () => {
+    const result = await readUsersTrueAttendanceCount();
+    setTotalTrueUserAttendance(result);
+  };
+
+  const readUFalseAttendance = async () => {
+    const result = await readUsersFalseAttendanceCount();
+    setTotalFalseUserAttendance(result);
+  };
+
+  readUTrueAttendance();
+  readUFalseAttendance();
+
+  const dataChart = {
+    labels: ["Red", "Blue"],
+    datasets: [
+      {
+        label: "My First Dataset",
+        data: [totalUsersFalseAttendance, totalUsersTrueAttendance],
+        backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)"],
+        hoverOffset: 4,
+      },
+    ],
+  };
+
+  useEffect(() => {
+    console.log(">>", totalUsersFalseAttendance);
+    //readU();
+    //
+    //readUFalseAttendance();
+  }, []);
 
   function handleChange(event) {
     setName(event.target.value);
@@ -40,9 +77,9 @@ export default function Home() {
   }
 
   async function createUserButton() {
-    const meme = await readUser(name);
+    const meme = await readUser(parseInt(name));
     setUser(meme);
-    console.log('=>', user);
+    console.log("=>", user);
   }
 
   return (
@@ -203,8 +240,11 @@ export default function Home() {
         </nav>
 
         <header className="bg-white shadow">
-          <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+          <div className=" max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h1 className="text-3xl font-bold text-gray-900">Bienvenido/a,</h1>
+            <h4 className="text-2xl font-bold text-gray-900">
+              Se han detectado: {totalUsers} participantes
+            </h4>
           </div>
         </header>
 
@@ -216,20 +256,39 @@ export default function Home() {
                   <div className="md:grid md:grid-cols-3 md:gap-6">
                     <div className="md:col-span-1">
                       <div className="px-4 sm:px-0">
-                        <h3 className="text-lg font-medium leading-6 text-gray-900">
-                          ¿A quien deseas buscar?
-                          {user.fase}
-                        </h3>
-                        <p className="mt-1 text-sm text-gray-600">
-                          Introduce su número de cédula (sin puntos), o correo
-                          electrónico para encontrar al participante. Podrás
-                          editarlo y borrarlo.
-                        </p>
+                        <div
+                          className="border-2 px-2 py-3 rounded-lg"
+                          id="chartGeneral"
+                        >
+                          <div className="flex justify-around">
+                            <div className="flex space-x-2 items-center text-center bg-blue-300 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded ">
+                              <p className="text-1xl">Asistieron</p>
+                              <p className="text-2xl font-extrabold">
+                                {totalUsersTrueAttendance}
+                              </p>
+                            </div>
+                            <div className="flex space-x-2 items-center text-center bg-red-300 text-red-800 text-xs font-semibold px-2.5 rounded ">
+                              <p className="text-1xl">No Asistieron</p>
+                              <p className="text-2xl font-extrabold">
+                                {totalUsersFalseAttendance}
+                              </p>
+                            </div>
+                          </div>
+                          <Pie data={dataChart} />
+                        </div>
                       </div>
                     </div>
                     <div className="mt-5 md:mt-0 md:col-span-2">
-                      <form>
-                        <div className="shadow sm:rounded-md sm:overflow-hidden">
+                      <h3 className="text-3xl font-medium leading-6 text-gray-900">
+                        ¿A quien deseas buscar?
+                      </h3>
+                      <p className="mt-3 text-sm text-gray-600">
+                        Introduce su número de cédula (sin puntos), o correo
+                        electrónico para encontrar al participante. Podrás
+                        editarlo y borrarlo.
+                      </p>
+                      <form className="mt-5">
+                        <div className="border-2 rounded-lg">
                           <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
                             <div className="grid grid-cols-1 gap-6">
                               <div className="">
@@ -272,218 +331,202 @@ export default function Home() {
                               onClick={createUserButton}
                               className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
-                              Save
+                              Buscar
                             </button>
                           </div>
                         </div>
                       </form>
-                    </div>
-                  </div>
-                </div>
-                <div className="hidden sm:block" aria-hidden="true">
-                  <div className="py-5">
-                    <div className="border-t border-gray-200"></div>
-                  </div>
-                </div>
-                <div className="mt-10 sm:mt-0">
-                  <div className="md:grid md:grid-cols-3 md:gap-6">
-                    <div className="md:col-span-1">
-                      <div className="px-4 sm:px-0">
-                        <h3 className="text-lg font-medium leading-6 text-gray-900">
-                          Resultado de la información
-                        </h3>
-                      </div>
-                    </div>
-                    <div className="bg-white shadow overflow-hidden col-span-2 sm:rounded-lg">
-                      <div className="items-center px-4 py-5 sm:px-6">
-                        <div className="flex justify-start" id="title">
-                          <h3 className="block text-lg leading-6 font-medium text-gray-900">
-                            Datos del participante
-                          </h3>
-                        </div>
-                        <div className="flex justify-end" id="buttons">
-                          {user.attendance ? (
-                            <span className="flex items-center justify-center text-align-center bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
-                              Este participante asistió
-                            </span>
-                          ) : (
-                            <>
-                              {user.name ? (
-                                <span className="flex items-center justify-center text-align-center bg-red-100 text-red-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900">
-                                  Este participante no asistió
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                            </>
-                          )}
+                      <div className="mt-5 bg-white border-2 overflow-hidden col-span-2 sm:rounded-lg">
+                        <div className="items-center px-4 py-5 sm:px-6">
+                          <div className="flex justify-start" id="title">
+                            <h3 className="block text-lg leading-6 font-medium text-gray-900">
+                              Datos del participante
+                            </h3>
+                          </div>
+                          <div className="flex justify-end" id="buttons">
+                            {user.attendance ? (
+                              <span className="flex items-center justify-center text-align-center bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
+                                Este participante asistió
+                              </span>
+                            ) : (
+                              <>
+                                {user.name ? (
+                                  <span className="flex items-center justify-center text-align-center bg-red-100 text-red-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900">
+                                    Este participante no asistió
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                              </>
+                            )}
 
-                          {user.name ? (
-                            <button
-                              onClick={editButton}
-                              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                            >
-                              Editar
-                            </button>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
-                      <div
-                        id="account-info"
-                        className="border-t border-gray-200"
-                      >
-                        <dl>
-                          <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500">
-                              Nombre y apellido
-                            </dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                              <input
-                                className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
-                                type="text"
-                                id="name"
-                                value={user.NOMBRE_APELLIDO}
-                                disabled
-                              />
-                            </dd>
-                          </div>
-                          <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500">
-                              Cédula de identidad
-                            </dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                              <input
-                                className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
-                                type="text"
-                                id="ci"
-                                value={user.ci}
-                                disabled
-                              />
-                            </dd>
-                          </div>
-                          <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500">
-                              Correo electrónico
-                            </dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                              <input
-                                className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
-                                type="text"
-                                id="email"
-                                value={user.email}
-                                disabled
-                              />
-                            </dd>
-                          </div>
-                          <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500">
-                              Teléfono
-                            </dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                              <input
-                                className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
-                                type="text"
-                                id="telephone"
-                                value={user.telephone}
-                                disabled
-                              />
-                            </dd>
-                          </div>
-                          <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500">
-                              Taller
-                            </dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                              <ul
-                                role="list"
-                                className="border border-gray-200 rounded-md divide-y divide-gray-200"
+                            {user.NOMBRE_APELLIDO ? (
+                              <a
+                                href={"/edit/" + user.CEDULA}
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                               >
-                                <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-                                  <div className="w-0 flex-1 flex items-center">
-                                    <svg
-                                      className="flex-shrink-0 h-5 w-5 text-gray-400"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      viewBox="0 0 20 20"
-                                      fill="currentColor"
-                                      aria-hidden="true"
-                                    >
-                                      <path
-                                        fillRule="evenodd"
-                                        d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-                                        clipRule="evenodd"
+                                Editar
+                              </a>
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                        </div>
+                        <div
+                          id="account-info"
+                          className="border-t border-gray-200"
+                        >
+                          <dl>
+                            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-500">
+                                Nombre y apellido
+                              </dt>
+                              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <input
+                                  className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
+                                  type="text"
+                                  id="name"
+                                  value={user.NOMBRE_APELLIDO}
+                                  disabled
+                                />
+                              </dd>
+                            </div>
+                            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-500">
+                                Cédula de identidad
+                              </dt>
+                              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <input
+                                  className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
+                                  type="text"
+                                  id="ci"
+                                  value={user.CEDULA}
+                                  disabled
+                                />
+                              </dd>
+                            </div>
+                            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-500">
+                                Correo electrónico
+                              </dt>
+                              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <input
+                                  className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
+                                  type="text"
+                                  id="email"
+                                  value={user.CORREO}
+                                  disabled
+                                />
+                              </dd>
+                            </div>
+                            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-500">
+                                Teléfono
+                              </dt>
+                              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <input
+                                  className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
+                                  type="text"
+                                  id="telephone"
+                                  value={user.TELEFONO}
+                                  disabled
+                                />
+                              </dd>
+                            </div>
+                            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-500">
+                                Taller
+                              </dt>
+                              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <ul
+                                  role="list"
+                                  className="border border-gray-200 rounded-md divide-y divide-gray-200"
+                                >
+                                  <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                                    <div className="w-0 flex-1 flex items-center">
+                                      <svg
+                                        className="flex-shrink-0 h-5 w-5 text-gray-400"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        aria-hidden="true"
+                                      >
+                                        <path
+                                          fillRule="evenodd"
+                                          d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
+                                          clipRule="evenodd"
+                                        />
+                                      </svg>
+                                      <input
+                                        className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
+                                        type="text"
+                                        id="taller"
+                                        value={user.TALLER}
+                                        disabled
                                       />
-                                    </svg>
-                                    <input
-                                      className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
-                                      type="text"
-                                      id="taller"
-                                      value={user.taller}
-                                      disabled
-                                    />
-                                  </div>
-                                </li>
-                              </ul>
-                            </dd>
-                          </div>
-                          <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500">
-                              Fase
-                            </dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                              <input
-                                className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
-                                type="text"
-                                id="fase"
-                                value={user.fase}
-                                disabled
-                              />
-                            </dd>
-                          </div>
-                          <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500">
-                              Grupo
-                            </dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                              <input
-                                className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
-                                type="text"
-                                id="group"
-                                value={user.group}
-                                disabled
-                              />
-                            </dd>
-                          </div>
-                          <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500">
-                              Número de orden
-                            </dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                              <input
-                                className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
-                                type="text"
-                                id="orden_number"
-                                value={user.orden_number}
-                                disabled
-                              />
-                            </dd>
-                          </div>
-                          <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500">
-                              Número de planilla
-                            </dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                              <input
-                                className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
-                                type="text"
-                                id="planilla"
-                                value={user.planilla}
-                                disabled
-                              />
-                            </dd>
-                          </div>
-                        </dl>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </dd>
+                            </div>
+                            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-500">
+                                Fase
+                              </dt>
+                              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <input
+                                  className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
+                                  type="text"
+                                  id="fase"
+                                  value={user.FASE}
+                                  disabled
+                                />
+                              </dd>
+                            </div>
+                            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-500">
+                                Grupo
+                              </dt>
+                              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <input
+                                  className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
+                                  type="text"
+                                  id="group"
+                                  value={user.GRUPO}
+                                  disabled
+                                />
+                              </dd>
+                            </div>
+                            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-500">
+                                Número de orden
+                              </dt>
+                              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <input
+                                  className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
+                                  type="text"
+                                  id="orden_number"
+                                  value={user.ID}
+                                  disabled
+                                />
+                              </dd>
+                            </div>
+                            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-500">
+                                Número de planilla
+                              </dt>
+                              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <input
+                                  className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disable"
+                                  type="text"
+                                  id="planilla"
+                                  value={user.N_PLANILLA}
+                                  disabled
+                                />
+                              </dd>
+                            </div>
+                          </dl>
+                        </div>
                       </div>
                     </div>
                   </div>

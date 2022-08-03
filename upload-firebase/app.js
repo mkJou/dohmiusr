@@ -19,10 +19,10 @@ const db = getFirestore(app);
 var datos = [];
 
 const ExcelEnter = () => {
-  const excel = XLSX.readFile("databs3.xlsx");
+  const excel = XLSX.readFile("fase3finally.xlsx", { cellDates: true });
 
   var nameSheet = excel.SheetNames;
-  datos = XLSX.utils.sheet_to_json(excel.Sheets[nameSheet[0]]);
+  datos = XLSX.utils.sheet_to_json(excel.Sheets[nameSheet[2]]);
   console.log(nameSheet[0]);
 };
 
@@ -56,14 +56,63 @@ const uploadUsersSpecify = async () => {
   for (let index = 0; index < datos.length; index++) {
     const user = datos[index];
 
-    /*if (user.TALLER == "Panaderia comercial") {
+    if (user.TALLER == "PANADERIA") {
       user.TALLER = "PANADERIA-COMERCIAL";
-    }*/
+      console.log("PANADERIA COMERCIAL MODIFICADA");
+    }
+
+    if (user.CEDULA == undefined) {
+      user.CEDULA = 0;
+      console.log(">> Se ha detectado CEDULA undefined (LINEA DE ABAJO)");
+    }
+
+    if (user.N_PLANILLA == undefined) {
+      user.N_PLANILLA = 0;
+      console.log(">> Se ha detectado N_PLANILLA undefined (LINEA DE ABAJO)");
+    }
+
+    if (user.FASE == undefined) {
+      user.FASE = 0;
+      console.log(">> Se ha detectado FASE undefined (LINEA DE ABAJO)");
+    }
+
+    if (user.PROFESION == undefined) {
+      user.PROFESION = "";
+      console.log(">> Se ha detectado PROFESION undefined (LINEA DE ABAJO)");
+    }
+
+    if (user.FECHA_DE_NACIMIENTO == undefined) {
+      user.FECHA_DE_NACIMIENTO = "";
+      console.log(
+        ">> Se ha detectado FECHA_DE_NACIMIENTO undefined (LINEA DE ABAJO)"
+      );
+    }
+
+    if (user.CORREO == undefined) {
+      user.CORREO = "";
+      console.log(">> Se ha detectado CORREO undefined (LINEA DE ABAJO)");
+    }
+
+    if (user.PARROQUIA == undefined) {
+      user.PARROQUIA = "";
+      console.log(">> Se ha detectado PARROQUIA undefined (LINEA DE ABAJO)");
+    }
+
+    if (user.GRUPO == undefined) {
+      user.GRUPO = "";
+      console.log(">> Se ha detectado GRUPO undefined (LINEA DE ABAJO)");
+    }
+
+    if (user.DIRECCION == undefined) {
+      user.CORREO = "";
+      console.log(">> Se ha detectado CORREO undefined (LINEA DE ABAJO)");
+    }
 
     /** TALLER */
     //user.TALLER = "TALLER BARISMO"
     /** ASISTIO */
-    //user.ATTENDED = true
+    user.ATTENDED = true;
+    user.COMPLETE = true;
     /** FASE */
     //user.FASE = "4"
     /** QUE ASISTIO */
@@ -72,9 +121,12 @@ const uploadUsersSpecify = async () => {
     //user.OBSERVATIONS = ""
 
     try {
-      //const dr = await addDoc(collection(db, "users"), user);
-      console.log(user)
-      //console.log("Document written with ID: ", dr.id);
+      const dr = await addDoc(collection(db, "users"), user);
+      //console.log(user.FECHA_DE_NACIMIENTO);
+      console.log("Document written with ID: ", dr.id);
+      console.log(
+        "------------------------------------------------------------"
+      );
     } catch (error) {
       console.error("Error adding document: ", error);
     }
