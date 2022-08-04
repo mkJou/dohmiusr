@@ -19,7 +19,7 @@ const db = getFirestore(app);
 var datos = [];
 
 const ExcelEnter = () => {
-  const excel = XLSX.readFile("fase3finally.xlsx", { cellDates: true });
+  const excel = XLSX.readFile("fase3export.xlsx", { cellDates: true });
 
   var nameSheet = excel.SheetNames;
   datos = XLSX.utils.sheet_to_json(excel.Sheets[nameSheet[2]]);
