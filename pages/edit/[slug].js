@@ -13,6 +13,12 @@ const NotPlanilla = () => {
 
   const [telephone, updateTelephone] = useState(0);
 
+  const handleChange = (e) => {
+    console.log(e.target.id);
+    console.log(e.target.value)
+    console.log(user[e.target.id])
+  };
+
   useEffect(() => {
     let isSubscribed = false;
 
@@ -192,7 +198,13 @@ const NotPlanilla = () => {
             <div className=" max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
               <h1 className="text-3xl font-bold text-gray-900">
                 Participante: <br />
-                {user.NOMBRE_APELLIDO}
+                {user.NOMBRE_APELLIDO ? (
+                  "xd"
+                ) : (
+                  <>
+                    <span className="animate-pulse">Cargando...</span>
+                  </>
+                )}
               </h1>
             </div>
           </header>
@@ -213,7 +225,11 @@ const NotPlanilla = () => {
                         </p>
                       </div>
                       <div className="grid justify-center align-center grid-cols-6 gap-6">
-                        <div className="col-span-6 sm:col-span-6 lg:col-span-2">
+                        <div
+                          className={`${
+                            user.NOMBRE_APELLIDO ? "" : "animate-pulse"
+                          } col-span-6 sm:col-span-6 lg:col-span-2`}
+                        >
                           <label
                             htmlFor="city"
                             className="block text-sm font-medium text-gray-700"
@@ -223,14 +239,19 @@ const NotPlanilla = () => {
                           <input
                             type="text"
                             name="city"
+                            onChange={handleChange}
                             value={user.NOMBRE_APELLIDO}
                             id="NOMBRE_APELLIDO"
                             autoComplete="address-level2"
-                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            className=" mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
 
-                        <div className="col-span-6 sm:col-span-3 lg:col-span-2">
+                        <div
+                          className={`${
+                            user.CEDULA ? "" : "animate-pulse"
+                          } col-span-6 sm:col-span-6 lg:col-span-2`}
+                        >
                           <label
                             htmlFor="region"
                             className="block text-sm font-medium text-gray-700"
@@ -265,7 +286,11 @@ const NotPlanilla = () => {
                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 text-gray-200 rounded-md"
                           />
                         </div>
-                        <div className="col-span-6 sm:col-span-3 lg:col-span-2">
+                        <div
+                          className={`${
+                            user.CORREO ? "" : "animate-pulse"
+                          } col-span-6 sm:col-span-6 lg:col-span-2`}
+                        >
                           <label
                             htmlFor="postal-code"
                             className="block text-sm font-medium text-gray-700"
@@ -280,7 +305,11 @@ const NotPlanilla = () => {
                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
-                        <div className="col-span-6 sm:col-span-3 lg:col-span-2">
+                        <div
+                          className={`${
+                            user.TELEFONO ? "" : "animate-pulse"
+                          } col-span-6 sm:col-span-6 lg:col-span-2`}
+                        >
                           <label
                             htmlFor="postal-code"
                             className="block text-sm font-medium text-gray-700"

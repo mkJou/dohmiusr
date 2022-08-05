@@ -267,9 +267,8 @@ const Filters = () => {
                 <option value="FECHA_NACIMIENTO">
                   Sin fecha de nacimiento
                 </option>
-                <option value="CEDULA">
-                  Sin cédula
-                </option>
+                <option value="CEDULA">Sin cédula</option>
+                <option value="PANADERIA-COMERCIAL">Sin profesion</option>
               </select>
               <button
                 type="button"
@@ -309,7 +308,13 @@ const Filters = () => {
                             CÉDULA DE IDENTIDAD
                           </th>
                           <th scope="col" className="py-3 px-6">
+                            PLANILLA
+                          </th>
+                          <th scope="col" className="py-3 px-6">
                             TALLER
+                          </th>
+                          <th scope="col" className="py-3 px-6">
+                            ASISTIÓ
                           </th>
                           <th scope="col" className="py-3 px-6">
                             FASE
@@ -333,7 +338,11 @@ const Filters = () => {
                                 {user.NOMBRE_APELLIDO}
                               </th>
                               <td className="py-4 px-6">{user.CEDULA}</td>
+                              <td className="py-4 px-6">{user.N_PLANILLA}</td>
                               <td className="py-4 px-6">{user.TALLER}</td>
+                              <td className="py-4 px-6">
+                                {user.ATTENDED ? "SI" : "NO"}
+                              </td>
                               <td className="py-4 px-6">
                                 {user.FASE ? (
                                   user.FASE

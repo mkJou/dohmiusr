@@ -1,58 +1,29 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
-
+import mongoose from "mongoose";
 import XLSX from "xlsx";
 
-/** CONNECTION */
-const firebaseConfig = {
-  apiKey: "AIzaSyCHjbaHRmlHGPzZt-99Yk2Y1SmYhwGoGSQ",
-  authDomain: "dohmiusr.firebaseapp.com",
-  projectId: "dohmiusr",
-  storageBucket: "dohmiusr.appspot.com",
-  messagingSenderId: "81484010552",
-  appId: "1:81484010552:web:f99bf1cd710fc3d17dc2cd",
-};
+mongoose.connect(
+  "mongodb+srv://joalex:17569323Jouu1n@cluster0.rzvef.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+);
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error: "));
+db.once("open", function () {
+  console.log("Connected successfully");
+});
 
 var datos = [];
 
 const ExcelEnter = () => {
-  const excel = XLSX.readFile("reposteriaf5.xlsx", { cellDates: true });
+  const excel = XLSX.readFile("import/fase2.xlsx", { cellDates: true });
 
   var nameSheet = excel.SheetNames;
-  datos = XLSX.utils.sheet_to_json(excel.Sheets[nameSheet[0]]);
-  console.log(nameSheet[0]);
+  datos = XLSX.utils.sheet_to_json(excel.Sheets[nameSheet[13]]);
+  console.log(nameSheet[13]);
 };
 
 ExcelEnter();
 
-const uploadUsersOne = async () => {
-  for (let index = 0; index < datos.length; index++) {
-    const user = datos[index];
-
-    try {
-      const dr = await addDoc(collection(db, "users"), user);
-      console.log("Document written with ID: ", dr.id);
-    } catch (error) {
-      console.error("Error adding document: ", error);
-    }
-  }
-};
-
-// <option value="TALLER-PIZZERIA">TALLER DE PIZZERIA</option>
-// <option value="PASTAS-FRESCAS">TALLER DE PASTAS FRESCAS</option>
-// <option value="REPOSTERIA">REPOSTERIA</option>
-// <option value="PANADERIA-COMERCIAL">PANADERIA COMERCIAL</option>
-// <option value="BARISMO">BARISMO</option>
-// <option value="FRITURA-ZULIANA">FRITURA ZULIANA</option>
-// <option value="SALSA-PASTAS">SALSA PARA PASTAS</option>
-// <option value="POSTRES-LIGEROS">POSTRES LIGEROS</option>
-// <option value="COMIDA-RAPIDA">COMIDA RAPIDA</option>
-// <option value="ASISTENTE-COCINA">ASISTENTE DE COCINA</option>
-
-const uploadUsersSpecify = async () => {
+const uploadUsersSpecify = () => {
   for (let index = 0; index < datos.length; index++) {
     const user = datos[index];
 
@@ -72,16 +43,16 @@ const uploadUsersSpecify = async () => {
     }
 
     if (user.ESTADO == undefined) {
-      user.ESTADO = ""
+      user.ESTADO = "";
     }
 
     if (user.CIUDAD == undefined) {
-      user.CIUDAD = ""
+      user.CIUDAD = "";
     }
 
     if (user.MUNICIPIO == undefined) {
-      user.MUNICIPIO = ""
-    } 
+      user.MUNICIPIO = "";
+    }
 
     if (user.FASE == undefined) {
       user.FASE = 0;
@@ -125,17 +96,19 @@ const uploadUsersSpecify = async () => {
     /** ASISTIO */
     user.ATTENDED = true;
     user.COMPLETE = true;
+    user.FASE = 2;
     /** FASE */
-    //user.FASE = 2
+
     /** QUE ASISTIO */
     //user.COMPLETION = "2"
     /** OBSERVACIONES */
     //user.OBSERVATIONS = ""
 
     try {
-      const dr = await addDoc(collection(db, "users"), user);
+      db.collection("users").insertOne(user);
+      //const dr = await addDoc(collection(db, "users"), user);
       //console.log(user.FECHA_DE_NACIMIENTO);
-      console.log("Document written with ID: ", dr.id);
+      console.log("Document written with ID: ", "IMPORTANDO");
       console.log(
         "------------------------------------------------------------"
       );
@@ -145,5 +118,25 @@ const uploadUsersSpecify = async () => {
   }
 };
 
-//uploadUsersOne()
+// <option value="TALLER-PIZZERIA">TALLER DE PIZZERIA</option>
+// <option value="PASTAS-FRESCAS">TALLER DE PASTAS FRESCAS</option>
+// <option value="REPOSTERIA">REPOSTERIA</option>
+// <option value="PANADERIA-COMERCIAL">PANADERIA COMERCIAL</option>
+// <option value="BARISMO">BARISMO</option>
+// <option value="FRITURA-ZULIANA">FRITURA ZULIANA</option>
+// <option value="SALSA-PASTAS">SALSA PARA PASTAS</option>
+// <option value="POSTRES-LIGEROS">POSTRES LIGEROS</option>
+// <option value="COMIDA-RAPIDA">COMIDA RAPIDA</option>
+// <option value="ASISTENTE-COCINA">ASISTENTE DE COCINA</option>
+
+const removeError = () => {
+  try {
+    db.collection("users").deleteMany({ FASE: 5 });
+    console.log("DELETED");
+  } catch (error) {
+    console.log("Error", error);
+  }
+};
+
+//removeError();
 uploadUsersSpecify();

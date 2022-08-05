@@ -12,6 +12,7 @@ import {
   readUsersCount,
   readUsersFalseAttendanceCount,
   readUsersTrueAttendanceCount,
+  readUsersAttendedCondition
 } from "../lib/users";
 
 export default function Home() {
@@ -25,7 +26,7 @@ export default function Home() {
   const [totalUsersFalseAttendance, setTotalFalseUserAttendance] = useState(0);
 
   const readU = async () => {
-    const result = await readUsersCount();
+    const result = await readUsersAttendedCondition(false);
     setTotalUsers(result);
   };
 
@@ -35,7 +36,7 @@ export default function Home() {
   };
 
   const readUFalseAttendance = async () => {
-    const result = await readUsersFalseAttendanceCount();
+    const result = await readUsersAttendedCondition(false);
     setTotalFalseUserAttendance(result);
   };
 
@@ -264,13 +265,15 @@ export default function Home() {
                             <div className="flex space-x-2 items-center text-center bg-blue-300 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded ">
                               <p className="text-1xl">Asistieron</p>
                               <p className="text-2xl font-extrabold">
-                                {totalUsersTrueAttendance}
+                                904
+                                {/**{totalUsersTrueAttendance} */}
                               </p>
                             </div>
                             <div className="flex space-x-2 items-center text-center bg-red-300 text-red-800 text-xs font-semibold px-2.5 rounded ">
                               <p className="text-1xl">No Asistieron</p>
                               <p className="text-2xl font-extrabold">
-                                {totalUsersFalseAttendance}
+                                338
+                                {/**{totalUsersFalseAttendance} */}
                               </p>
                             </div>
                           </div>
