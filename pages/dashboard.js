@@ -1,7 +1,14 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
+import * as XLSX from 'xlsx';
+
+import Head from 'next/head';
 
 import { useRouter } from 'next/router';
+
+import { Chart, ArcElement } from "chart.js";
+Chart.register(ArcElement);
+import { Pie } from "react-chartjs-2";
 
 const Dashboard = () => {
 
@@ -22,6 +29,18 @@ const Dashboard = () => {
     attendedWithoutPlanilla: 0,
 
   });
+
+  const dataChart = {
+    labels: ["Red", "Blue"],
+    datasets: [
+      {
+        label: ["My First Dataset", "asd"],
+        data: [totalNotAttendedGeneral, totalAttendedGeneral, totalAttendedWithoutPlanilla],
+        backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 255, 0)"],
+        hoverOffset: 4,
+      },
+    ],
+  };
 
   const router = useRouter()
 
@@ -84,6 +103,17 @@ const Dashboard = () => {
     }
   }
 
+  const getNotPlanilla = async () => {
+
+    try {
+      const response = await axios.post('/api/totaluserswoplanilla');
+      console.log(response.data)
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   useEffect(() => {
     handleGetProfile()
     getTotalUsers()
@@ -95,6 +125,9 @@ const Dashboard = () => {
 
   return (
     <>
+      <Head>
+        <title>Dashboard - DohmiUSR</title>
+      </Head>
       <div className="min-h-full">
         <nav className="bg-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -246,9 +279,9 @@ const Dashboard = () => {
 
         <header className="bg-white shadow">
           <div className=" max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold text-gray-900">Bienvenido/a,</h1>
-            <h4 className="text-2xl font-bold text-gray-900">
-              Se han detectado: {totalGeneral} participantes
+            <h1 className="text-3xl font-bold text-gray-900">Bienvenido/a, {user.username.toUpperCase()} </h1>
+            <h4 className="text-3xl font-bold text-gray-900">
+              Se encontraron {totalGeneral} participantes en total.
             </h4>
           </div>
         </header>
@@ -261,15 +294,30 @@ const Dashboard = () => {
                   <div className="md:grid md:grid-cols-3 md:gap-6">
                     <div className="md:col-span-1">
                       <div className="px-4 sm:px-0">
+                        {totalAttendedWithoutPlanilla > 0 ? <>
+                          <div className="flex p-4 mb-4 text-xs text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+                            <svg aria-hidden="true" className="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"></path></svg>
+                            <span className="sr-only">Info</span>
+                            <div>
+                              Se detectó que <span className='font-bold'>{totalAttendedWithoutPlanilla} participantes</span> asistieron sin planilla.
+                            </div>
+                          </div>
+                        </> : ''}
                         <div
                           className="border-2 px-2 py-3 rounded-lg"
                           id="chartGeneral"
                         >
-                          <div className="flex justify-around">
+                          <div className="flex space-x-3 mb-5 justify-around">
                             <div className="flex space-x-2 items-center text-center bg-blue-300 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded ">
                               <p className="text-1xl">Asistieron</p>
                               <p className="text-2xl font-extrabold">
                                 {totalAttendedGeneral}
+                              </p>
+                            </div>
+                            <div className="flex space-x-2 items-center text-center bg-yellow-300 text-red-800 text-xs font-semibold px-2.5 rounded ">
+                              <p className="text-1xl">Asistieron S/Planilla</p>
+                              <p className="text-2xl font-extrabold">
+                                {totalAttendedWithoutPlanilla}
                               </p>
                             </div>
                             <div className="flex space-x-2 items-center text-center bg-red-300 text-red-800 text-xs font-semibold px-2.5 rounded ">
@@ -280,7 +328,9 @@ const Dashboard = () => {
                             </div>
 
                           </div>
-                          <p className='block text-center p-2 text-red-500 font-bold'>[1] Se detectaron <span className='font-extrabold'>{totalAttendedWithoutPlanilla}</span> participantes que asisiteron sin planillas.</p>
+
+
+                          <Pie data={dataChart} />
                         </div>
                       </div>
                     </div>

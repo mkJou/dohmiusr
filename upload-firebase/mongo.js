@@ -14,11 +14,11 @@ db.once("open", function () {
 var datos = [];
 
 const ExcelEnter = () => {
-  const excel = XLSX.readFile("import/fase2.xlsx", { cellDates: true });
+  const excel = XLSX.readFile("import/addbarismof6.xlsx", { cellDates: true });
 
   var nameSheet = excel.SheetNames;
-  datos = XLSX.utils.sheet_to_json(excel.Sheets[nameSheet[13]]);
-  console.log(nameSheet[13]);
+  datos = XLSX.utils.sheet_to_json(excel.Sheets[nameSheet[0]]);
+  console.log(nameSheet[0]);
 };
 
 ExcelEnter();
@@ -92,11 +92,11 @@ const uploadUsersSpecify = () => {
     }
 
     /** TALLER */
-    //user.TALLER = "TALLER-PIZZERIA"
+    user.TALLER = "BARISMO"
     /** ASISTIO */
     user.ATTENDED = true;
     user.COMPLETE = true;
-    user.FASE = 2;
+    user.FASE = 6;
     /** FASE */
 
     /** QUE ASISTIO */
