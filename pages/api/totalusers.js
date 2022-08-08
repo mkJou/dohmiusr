@@ -10,9 +10,9 @@ handler.use(middleware);
 
 handler.get(async (req, res) => {
 
-  let doc = await req.db.collection('users').find({ATTENDED: true}).toArray()
-  console.log(doc.length);
-  res.json(doc.length);
+    let doc = await req.db.collection('users').find().toArray()
+    console.log(doc.length);
+    res.json({ 'count': doc.length });
 });
 
 export default handler;
