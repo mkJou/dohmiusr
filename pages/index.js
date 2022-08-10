@@ -77,10 +77,13 @@ export default function Home() {
     tls.disabled;
   }
 
-  async function createUserButton() {
-    const meme = await readUser(parseInt(name));
-    setUser(meme);
-    console.log("=>", user);
+  function createUserButton() {
+    //const meme = await readUser(parseInt(name));
+    //setUser(meme);
+    let pepe = '12.523.222';
+    console.log('>>', 'test test test')
+    //console.log(parseInt(pepe))
+    //console.log("=>", user);
   }
 
   return (

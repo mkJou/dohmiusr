@@ -30,6 +30,14 @@ const Dashboard = () => {
 
   });
 
+  const [usersFinded, setUsersFinded] = useState([])
+
+  const handleChangeSearchInput = async (e) => {
+
+    const response = await axios.post('/api/searchUserInput', { select: 'CEDULA', inputr: e.target.value });
+    console.log(response.data)
+  }
+
   const dataChart = {
     labels: ["Red", "Blue"],
     datasets: [
@@ -47,6 +55,20 @@ const Dashboard = () => {
   const handleGetProfile = async () => {
     const response = await axios.get('/api/auth/profile');
     setUser(response.data)
+  }
+
+  const searchUserButton = () => {
+    let pepe = '125.23.2.22';
+    let newp = ''
+    const divi = pepe.split('.')
+    newp.concat(divi[0])
+    console.log('>>', 'test test test')
+    divi.map(dv => {
+
+      newp = `${newp}${dv}`
+
+    })
+    console.log('New number cedula', parseInt(newp))
   }
 
   const logoutButton = async () => {
@@ -320,10 +342,16 @@ const Dashboard = () => {
                                 {totalAttendedWithoutPlanilla}
                               </p>
                             </div>
-                            <div className="flex space-x-2 items-center text-center bg-red-300 text-red-800 text-xs font-semibold px-2.5 rounded ">
+                            <div className="space-x-2 items-center text-center bg-red-300 text-red-800 text-xs font-semibold px-2.5 rounded ">
                               <p className="text-1xl">No Asistieron</p>
-                              <p className="text-2xl font-extrabold">
-                                {totalNotAttendedGeneral}
+                              <p className="text-xs font-extrabold">
+                                A: {totalNotAttendedGeneral-321}
+                              </p>
+                              <p className="text-xs font-extrabold">
+                                SA: 321
+                              </p>
+                              <p className="text-xs font-extrabold">
+                                TOTAL: {totalNotAttendedGeneral}
                               </p>
                             </div>
 
@@ -372,7 +400,7 @@ const Dashboard = () => {
                                   <input
                                     type="text"
                                     name="userci"
-
+                                    onChange={handleChangeSearchInput}
                                     id="userci"
                                     className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                                     placeholder="12345678"
@@ -384,7 +412,7 @@ const Dashboard = () => {
                           <div className="flex justify-center px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button
                               type="button"
-
+                              onClick={searchUserButton}
                               className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
                               Buscar
@@ -399,6 +427,7 @@ const Dashboard = () => {
                               Datos del participante
                             </h3>
                           </div>
+                          {usersFinded.valuer}
                           <div className="flex justify-end" id="buttons">
                             {userSearch.attendance ? (
                               <span className="flex items-center justify-center text-align-center bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
