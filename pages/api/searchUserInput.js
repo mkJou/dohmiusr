@@ -12,12 +12,12 @@ handler.post(async (req, res) => {
 
     const { select, inputr } = req.body;
 
-    const selectlist = {
-        [select]: { $search: `/${inputr}/` }
+    let selectlist = {
+        [select]: /{inputr}/
     }
 
     console.log(selectlist)
-    let doc = await req.db.collection('users').find(selectlist).toArray()
+    let doc = await req.db.collection('users').find({ [select]: new RegExp(inputr, "i") }).toArray()
     res.json(doc)
 
     //let doc = await req.db.collection('users').find().toArray()

@@ -30,13 +30,30 @@ const Dashboard = () => {
 
   });
 
+  const handleChangeOptionSelect = (e) => {
+    setOptionSelect(parseInt(e.target.value))
+  }
+
   const [usersFinded, setUsersFinded] = useState([])
+  const [whatSearch, setWhatSearch] = useState({})
 
   const handleChangeSearchInput = async (e) => {
 
-    const response = await axios.post('/api/searchUserInput', { select: 'CEDULA', inputr: e.target.value });
-    console.log(response.data)
+    let whatSearch = {
+      select: `${optionSelect ? 'CEDULA' : 'NOMBRE_APELLIDO'}`,
+      inputr: e.target.value
+    }
+
+    setWhatSearch({
+      ...whatSearch,
+      select: `${optionSelect ? 'CEDULA' : 'NOMBRE_APELLIDO'}`,
+      inputr: e.target.value
+    })
+    //const response = await axios.post('/api/searchUserInput', whatSearch);
+    //console.log(response)
   }
+
+  const [optionSelect, setOptionSelect] = useState(0)
 
   const dataChart = {
     labels: ["Red", "Blue"],
@@ -57,18 +74,28 @@ const Dashboard = () => {
     setUser(response.data)
   }
 
-  const searchUserButton = () => {
-    let pepe = '125.23.2.22';
-    let newp = ''
-    const divi = pepe.split('.')
-    newp.concat(divi[0])
-    console.log('>>', 'test test test')
-    divi.map(dv => {
+  const [isSearching, setIsSearching] = useState(false)
 
-      newp = `${newp}${dv}`
+  const searchUserButton = async () => {
 
-    })
-    console.log('New number cedula', parseInt(newp))
+    setIsSearching(true)
+
+    const response = await axios.post('/api/searchUserInput', whatSearch);
+    setUsersFinded((planilla) => [...response.data]);
+    setIsSearching(false)
+    console.log(usersFinded)
+
+    // let pepe = '125.23.2.22';
+    // let newp = ''
+    // const divi = pepe.split('.')
+    // newp.concat(divi[0])
+    // console.log('>>', 'test test test')
+    // divi.map(dv => {
+
+    //   newp = `${newp}${dv}`
+
+    // })
+    // console.log('New number cedula', parseInt(newp))
   }
 
   const logoutButton = async () => {
@@ -345,7 +372,7 @@ const Dashboard = () => {
                             <div className="space-x-2 items-center text-center bg-red-300 text-red-800 text-xs font-semibold px-2.5 rounded ">
                               <p className="text-1xl">No Asistieron</p>
                               <p className="text-xs font-extrabold">
-                                A: {totalNotAttendedGeneral-321}
+                                A: {totalNotAttendedGeneral - 321}
                               </p>
                               <p className="text-xs font-extrabold">
                                 SA: 321
@@ -373,38 +400,24 @@ const Dashboard = () => {
                       </p>
                       <form className="mt-5">
                         <div className="border-2 rounded-lg">
-                          <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
-                            <div className="grid grid-cols-1 gap-6">
-                              <div className="">
-                                <label
-                                  htmlFor="company-website"
-                                  className="block text-sm font-medium text-gray-700"
-                                >
-                                  {" "}
-                                  Cédula de identidad{" "}
+                          <div className="flex justify-center px-4 py-3 bg-white space-y-2 sm:p-6">
+                            <div className="grid grid-cols-1 gap-2">
+
+                              <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                                  Buscar por
                                 </label>
-                                <div className="mt-1 flex rounded-md shadow-sm">
-                                  <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="16"
-                                      height="16"
-                                      fill="currentColor"
-                                      className="bi bi-file-person"
-                                      viewBox="0 0 16 16"
-                                    >
-                                      <path d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z" />
-                                      <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                    </svg>
-                                  </span>
-                                  <input
-                                    type="text"
-                                    name="userci"
-                                    onChange={handleChangeSearchInput}
-                                    id="userci"
-                                    className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-                                    placeholder="12345678"
-                                  />
+                                <select onChange={handleChangeOptionSelect} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                                  <option value={parseInt("0")}>Nombre y apellido</option>
+                                  <option value={parseInt("1")}>Cédula de identidad</option>
+                                </select>
+                              </div>
+                              <div className="flex flex-wrap">
+                                <div className=" w-full">
+                                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                                    Datos
+                                  </label>
+                                  <input onChange={handleChangeSearchInput} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder={optionSelect ? 'Cédula de identidad' : 'Nombre o apellido'} />
                                 </div>
                               </div>
                             </div>
@@ -424,7 +437,7 @@ const Dashboard = () => {
                         <div className="items-center px-4 py-5 sm:px-6">
                           <div className="flex justify-start" id="title">
                             <h3 className="block text-lg leading-6 font-medium text-gray-900">
-                              Datos del participante
+                              Resultados de la busqueda
                             </h3>
                           </div>
                           {usersFinded.valuer}
@@ -456,6 +469,105 @@ const Dashboard = () => {
                               ""
                             )}
                           </div>
+                        </div>
+                        <div className="overflow-x-auto relative">
+                          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                              <tr>
+                                <th scope="col" className="py-3 px-6">
+                                  NOMBRE Y APELLIDO
+                                </th>
+                                <th scope="col" className="py-3 px-6">
+                                  CÉDULA DE IDENTIDAD
+                                </th>
+                                <th scope="col" className="py-3 px-6">
+                                  PLANILLA
+                                </th>
+                                <th scope="col" className="py-3 px-6">
+                                  TALLER
+                                </th>
+                                <th scope="col" className="py-3 px-6">
+                                  ASISTIÓ
+                                </th>
+                                <th scope="col" className="py-3 px-6">
+                                  ACCIONAR
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {isSearching ? (<>
+
+                                <span>asd</span>
+
+                              </>) : 'NADA'}
+                              {usersFinded.map((user) => (<>
+                                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                  <th
+                                    scope="row"
+                                    className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                  >
+                                    {user.NOMBRE_APELLIDO}
+                                  </th>
+                                  <td className="py-4 px-6">{user.CEDULA}</td>
+                                  <td className="py-4 px-6">{user.N_PLANILLA}</td>
+                                  <td className="py-4 px-6">{user.TALLER}</td>
+                                  <td className="py-4 px-6">
+                                    {user.ATTENDED ? "SI" : "NO"}
+                                  </td>
+
+                                  <td className="py-4 px-6">
+                                    <a href={"/edit/" + user.CEDULA}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye-fill" viewBox="0 0 16 16">
+                                      <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                      <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                    </svg></a>
+                                  </td>
+                                </tr>
+                              </>))}
+                              {/* {totalUsersNotPlanilla.map((user) => (
+                                <>
+                                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <th
+                                      scope="row"
+                                      className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                    >
+                                      {user.NOMBRE_APELLIDO}
+                                    </th>
+                                    <td className="py-4 px-6">{user.CEDULA}</td>
+                                    <td className="py-4 px-6">{user.N_PLANILLA}</td>
+                                    <td className="py-4 px-6">{user.TALLER}</td>
+                                    <td className="py-4 px-6">
+                                      {user.ATTENDED ? "SI" : "NO"}
+                                    </td>
+                                    <td className="py-4 px-6">
+                                      {user.FASE ? (
+                                        user.FASE
+                                      ) : (
+                                        <>
+                                          <span className="text-red-200">
+                                            Sin asignar
+                                          </span>
+                                        </>
+                                      )}
+                                    </td>
+                                    <td className="py-4 px-6">
+                                      {user.GRUPO ? (
+                                        user.GRUPO
+                                      ) : (
+                                        <>
+                                          <span className="text-red-200">
+                                            Sin asignar
+                                          </span>
+                                        </>
+                                      )}
+                                    </td>
+                                    <td className="py-4 px-6">
+                                      <a href={"/edit/" + user.CEDULA}>Editar</a>
+                                    </td>
+                                  </tr>
+                                </>
+                              ))} */}
+                            </tbody>
+                          </table>
                         </div>
                         <div
                           id="account-info"
