@@ -26,19 +26,82 @@ handler.get(async (req, res) => {
     9: 0
   }
 
-  let doc = await req.db.collection('users').find({ ATTENDED: false, TALLER: "ASISTENTE-COCINA" }).toArray()
+  let doc = await req.db.collection('users').find({ N_PLANILLA: 0}).toArray()
 
-  let newDoc = []
+  return res.json(doc)
 
-  doc.forEach(element => {
+  // const semail = [
+  //   20661031,
+  //   5163475,
+  //   25906521,
+  //   18846748,
+  //   31126184,
+  //   29509704,
+  //   26857715,
+  //   31274935,
+  //   17414941,
+  //   15889946,
+  //   15939307,
+  //   13008124,
+  //   9764812,
+  //   22396931,
+  //   20379481,
+  //   7805444,
+  //   10407380,
+  //   17684649,
+  //   15011809,
+  //   13372183,
+  //   14522678,
+  //   20689293,
+  //   20691417,
+  //   7971023,
+  //   18119113,
+  //   30603653,
+  //   24732976,
+  //   12038996,
+  //   9160136,
+  //   13742624,
+  //   11863049,
+  //   26126039,
+  //   22259103,
+  //   21596487,
+  //   3777712,
+  //   22169414,
+  //   26986530,
+  //   29977470,
+  //   31016059,
+  //   25241838,
+  // ]
 
-    if (element.N_PLANILLA != 0) {
+  // let newDoc = []
 
-      element.GP = "B"
-      newDoc.push(element)
-      listf[element.FASE] = listf[element.FASE] + 1;
-    }
-  });
+  // const searchUser = async () => {
+
+  //   const newlet = []
+
+  //   for (let index = 0; index < semail.length; index++) {
+  //     const element = semail[index];
+  //     const data = await req.db.collection('users').findOne({ CEDULA: element })
+  //     newlet.push(data)
+  //   }
+  //   return newlet
+  // }
+
+  // const lete = await searchUser()
+
+  //let doc = await req.db.collection('users').find({ ATTENDED: false, TALLER: "ASISTENTE-COCINA" }).toArray()
+
+  //
+
+  // doc.forEach(element => {
+
+  //   if (element.N_PLANILLA != 0) {
+
+  //     element.GP = "B"
+  //     newDoc.push(element)
+  //     listf[element.FASE] = listf[element.FASE] + 1;
+  //   }
+  // });
 
   // data.forEach(element => {
 
@@ -50,7 +113,8 @@ handler.get(async (req, res) => {
 
   // })
 
-  return res.json({...listf, length: newDoc.length, newDoc})
+  //return res.json(lete)
+  //return res.json({ ...listf, length: newDoc.length, newDoc })
 
   // 
 

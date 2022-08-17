@@ -140,6 +140,18 @@ const Dashboard = () => {
     }
   }
 
+  const getBarismoP = async () => {
+    try {
+      const response = await axios.post('/api/getTotalUsersTaller', { taller: BARISMO });
+      const { count } = response.data
+      console.log('getBAR', response)
+      
+      //setTotalAttendedWithoutPlanilla(count)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const getTotalNotAttendedUsers = async () => {
     try {
       const response = await axios.post('/api/totalUsersAttended', { booleano: false, withoutPlanilla: false });
@@ -164,11 +176,13 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    handleGetProfile()
-    getTotalUsers()
-    getTotalAttendedUsers()
-    getTotalNotAttendedUsers()
-    getTotalAttendedUsersWithoutPlanilla()
+    //handleGetProfile()
+    //getTotalUsers()
+    //getTotalAttendedUsers()
+    //getTotalNotAttendedUsers()
+    //getTotalAttendedUsersWithoutPlanilla()
+
+    getBarismoP()
 
   }, [])
 
