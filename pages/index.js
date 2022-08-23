@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import Link from "next/link";
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
@@ -8,13 +9,17 @@ const Home = () => {
     username: ''
   })
 
-  const [totalPTaller, setTotalPTaller] = useState({})
+  const [totalPTaller, setTotalPTaller] = useState([])
+
+  const [tpTaller, settpTaller] = useState([])
 
   const [totalGeneral, setTotalGeneral] = useState(0)
   const [totalAttendedGeneral, setTotalAttendedGeneral] = useState(0)
   const [totalNotAttendedGeneral, setTotalNotAttendedGeneral] = useState(0)
 
   const [totalAttendedWithoutPlanilla, setTotalAttendedWithoutPlanilla] = useState(0)
+
+  const [viewTaller, setViewTaller] = useState(false)
 
   const handleGetProfile = async () => {
     const response = await axios.get('/api/auth/profile');
@@ -56,7 +61,6 @@ const Home = () => {
 
   const getParticipantes = async (talleres) => {
 
-
     for (let index = 0; index < talleres.length; index++) {
       const element = talleres[index];
 
@@ -64,13 +68,37 @@ const Home = () => {
         const response = await axios.post('/api/getTotalUsersTaller', { taller: element });
         const { countA, countNa } = response.data
 
+        let newlist = {
+          name: element,
+          attended: countA,
+          nattended: countNa
+        }
+
+        settpTaller(result => ([
+          ...result,
+          newlist
+        ]))
+
+        // settpTaller(result => ([
+        //   ...result,
+        //   [String(element)]: {
+        //     attended: countA,
+        //     nattended: countNa
+        //   }
+        // ]))
+
+        // totalPTaller.push({
+        //   name: String(element),
+        //   attended: countA,
+        //   nattended: countNa
+        // })
         console.log(String(element), countA)
       } catch (error) {
         console.log(error)
       }
-
-
     }
+
+    setViewTaller(true)
 
     // try {
     //   
@@ -107,8 +135,9 @@ const Home = () => {
       'BARISMO',
       'TALLER-PIZZERIA',
       'ASISTENTE-COCINA',
-      'REPOSTERIA'
+      'REPOSTERIA',
     ])
+
   }, [])
 
   return (
@@ -122,31 +151,36 @@ const Home = () => {
               </div>
               <nav className="mt-6">
                 <div>
-                  <a className="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start border-l-4 border-purple-500" href="#">
-                    <span className="text-left">
-                      <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1472 992v480q0 26-19 45t-45 19h-384v-384h-256v384h-384q-26 0-45-19t-19-45v-480q0-1 .5-3t.5-3l575-474 575 474q1 2 1 6zm223-69l-62 74q-8 9-21 11h-3q-13 0-21-7l-692-577-692 577q-12 8-24 7-13-2-21-11l-62-74q-8-10-7-23.5t11-21.5l719-599q32-26 76-26t76 26l244 204v-195q0-14 9-23t23-9h192q14 0 23 9t9 23v408l219 182q10 8 11 21.5t-7 23.5z">
-                        </path>
-                      </svg>
-                    </span>
-                    <span className="mx-2 text-sm font-normal">
-                      Home
-                    </span>
-                  </a>
-                  <a className="w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent" href="#">
-                    <span className="text-left">
-                      <svg width="20" height="20" fill="currentColor" viewBox="0 0 2048 1792" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1070 1178l306-564h-654l-306 564h654zm722-282q0 182-71 348t-191 286-286 191-348 71-348-71-286-191-191-286-71-348 71-348 191-286 286-191 348-71 348 71 286 191 191 286 71 348z">
-                        </path>
-                      </svg>
-                    </span>
-                    <span className="mx-2 text-sm font-normal">
-                      Refered Projects
-                      <span className="p-1 ml-4 rounded-lg w-4 h-2 bg-gray-200 text-gray-400 text-xs">
-                        0
+                  <Link key={"homet"} href="/">
+                    <a className="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start border-l-4 border-purple-500">
+                      <span className="text-left">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M1472 992v480q0 26-19 45t-45 19h-384v-384h-256v384h-384q-26 0-45-19t-19-45v-480q0-1 .5-3t.5-3l575-474 575 474q1 2 1 6zm223-69l-62 74q-8 9-21 11h-3q-13 0-21-7l-692-577-692 577q-12 8-24 7-13-2-21-11l-62-74q-8-10-7-23.5t11-21.5l719-599q32-26 76-26t76 26l244 204v-195q0-14 9-23t23-9h192q14 0 23 9t9 23v408l219 182q10 8 11 21.5t-7 23.5z">
+                          </path>
+                        </svg>
                       </span>
-                    </span>
-                  </a>
+                      <span className="mx-2 text-sm font-normal">
+                        Inicio
+                      </span>
+                    </a>
+                  </Link>
+                  <Link key={'searchuser'} href="/search">
+                    <a className="w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent">
+                      <span className="text-left">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 2048 1792" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M1070 1178l306-564h-654l-306 564h654zm722-282q0 182-71 348t-191 286-286 191-348 71-348-71-286-191-191-286-71-348 71-348 191-286 286-191 348-71 348 71 286 191 191 286 71 348z">
+                          </path>
+                        </svg>
+                      </span>
+                      <span className="mx-2 text-sm font-normal">
+                        Buscar
+                        <span className="p-1 ml-4 rounded-lg w-4 h-2 bg-gray-200 text-gray-400 text-xs">
+                          0
+                        </span>
+                      </span>
+                    </a>
+                  </Link>
+
                   <a className="w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent" href="#">
                     <span className="text-left">
                       <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
@@ -196,6 +230,7 @@ const Home = () => {
             <div className="overflow-auto h-screen pb-24 px-4 md:px-6">
               <h1 className="text-4xl font-semibold text-gray-800 dark:text-white">
                 Bienvenido(a), ADMINGOB
+                {viewTaller ? 'xd' : 'false'}
               </h1>
               <h2 className="text-md text-gray-400">
                 Panel de consulta de información sobre los participantes del programa Saber y Emprender de la Gobernación del Zulia.
@@ -278,8 +313,42 @@ const Home = () => {
                 <hr></hr>
 
               </div>
+              {tpTaller.BARISMO?.attended}
+              <button onClick={() => console.log(tpTaller)}>Click me</button>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
-                <div className="w-full">
+                {totalPTaller.map(taller => <>
+                  <div key={taller?.name} className="w-full">
+                    <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
+                      <p className="text-sm w-max text-gray-700 dark:text-white font-semibold border-b border-gray-200">
+                        {taller?.name}
+                      </p>
+                      <div className="flex items-end space-x-2 my-6">
+                        <p className="text-5xl text-black dark:text-white font-bold">
+                          {taller.attended + taller.nattended}
+                        </p>
+                        <span className="text-white text-xl font-bold flex items-center">
+                          participantes
+                        </span>
+                      </div>
+                      <div className='mb-4'>
+                        <div>
+                          <span>Asistidos: {taller.attended}</span>
+                        </div>
+                        <div>
+                          <span>No Asistidos: {taller.nattended}</span>
+                        </div>
+                      </div>
+                      <button onClick={() => console.log('>>', totalPTaller)} className="bg-blue-500 w-full flex items-center justify-center space-x-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye-fill" viewBox="0 0 16 16">
+                          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                        </svg>
+                        <span>Visualizar</span>
+                      </button>
+                    </div>
+                  </div>
+                </>)}
+                {/* <div className="w-full">
                   <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
                     <p className="text-sm w-max text-gray-700 dark:text-white font-semibold border-b border-gray-200">
                       Barismo
@@ -396,7 +465,7 @@ const Home = () => {
                       <span>Visualizar</span>
                     </button>
                   </div>
-                </div>
+                </div> */}
                 <div className="w-full">
                   <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
                     <p className="text-sm w-max text-gray-700 dark:text-white font-semibold border-b border-gray-200">
