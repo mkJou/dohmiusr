@@ -3,6 +3,8 @@ import XLSX from "xlsx";
 
 import { ObjectId } from "mongodb"
 
+import * as fs from 'fs'
+
 mongoose.connect(
   "mongodb+srv://joalex:17569323Jouu1n@cluster0.rzvef.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 );
@@ -16,14 +18,39 @@ db.once("open", function () {
 var datos = [];
 
 const ExcelEnter = () => {
-  const excel = XLSX.readFile("import/fase9just.xlsx", { cellDates: true });
+  const excel = XLSX.readFile("export/export_users_1500.xlsx", { cellDates: true });
 
   var nameSheet = excel.SheetNames;
-  datos = XLSX.utils.sheet_to_json(excel.Sheets[nameSheet[7]]);
-  console.log(nameSheet[7]);
+  datos = XLSX.utils.sheet_to_json(excel.Sheets[nameSheet[0]]);
+  console.log(nameSheet[0]);
 };
 
 ExcelEnter();
+
+const writeJson = () => {
+
+  let dataDoc = []
+
+  for (let index = 0; index < datos.length; index++) {
+    const user = datos[index];
+
+    console.log(user.oldid)
+    dataDoc.push(user.oldid)
+  }
+
+  const meme = JSON.stringify(dataDoc)
+
+  fs.writeFile("import/eljson.json", meme, (err) => {
+    if (err)
+      console.log(err);
+    else {
+      console.log("File written successfully\n");
+      console.log("The written has the following contents:");
+      console.log(fs.readFileSync("import/eljson.json", "utf8"));
+    }
+  });
+  console.log('finish')
+}
 
 const uploadUsersSpecify = () => {
   for (let index = 0; index < datos.length; index++) {
@@ -122,6 +149,37 @@ const uploadUsersSpecify = () => {
   }
 };
 
+const updateUsersSpecify = () => {
+
+  for (let index = 0; index < datos.length; index++) {
+    const user = datos[index];
+
+    //console.log(user.CEDULA)
+
+    if (user.COMPLETE == undefined) {
+      user.COMPLETE = true
+    }
+
+    if (user.OBSERVATIONS == undefined) {
+      user.OBSERVATIONS = ""
+    }
+
+    let attendedBool = user.ATTENDED == 'true' ? true : false
+    let completeBool = user.COMPLETE == 'true' ? true : false
+    let userTaller = "REPOSTERIA"
+
+    console.log(index + 1, '—', user.CEDULA, user.N_PLANILLA, user.NOMBRE_APELLIDO, attendedBool, completeBool, '\n\n')
+
+    try {
+      const updateOned = db.collection('users').updateOne({ CEDULA: user.CEDULA }, { $set: { ATTENDED: true, COMPLETE: completeBool, FASE: 9, OBSERVATIONS: user.OBSERVATIONS, TALLER: userTaller, CONFIRMATION: true, NEXT_LEVEL: false } })
+      console.log('USER UPDATE', user.N_PLANILLA, updateOned)
+    } catch (error) {
+      console.log('ERROR', error, 'CEDULA: ' + user.CEDULA)
+    }
+
+  }
+
+}
 // //<option value="TALLER-PIZZERIA">TALLER DE PIZZERIA</option>
 // //<option value="PASTAS-FRESCAS">TALLER DE PASTAS FRESCAS</option>
 // //<option value="REPOSTERIA">REPOSTERIA</option>
@@ -196,9 +254,13 @@ async function replaceData() {
   console.log(index)
 }
 
+//updateUsersSpecify()
+
 //uploadJson()
 //removeError();
 
 //replaceData()
 
-uploadUsersSpecify();
+writeJson()
+
+//uploadUsersSpecify();
