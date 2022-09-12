@@ -1536,7 +1536,7 @@ handler.get(async (req, res) => {
   // }
   let newDoc = []
 
-  let letdoc = await req.db.collection('users').find({ ATTENDED: true, FASE: 10 }).toArray()
+  let letdoc = await req.db.collection('users').find({ ATTENDED: false }).toArray()
   // for (let index = 0; index < s1500.length; index++) {
   //   const element = s1500[index];
 
