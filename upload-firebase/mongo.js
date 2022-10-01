@@ -18,11 +18,11 @@ db.once("open", function () {
 var datos = [];
 
 const ExcelEnter = () => {
-  const excel = XLSX.readFile("export/export_users_1500.xlsx", { cellDates: true });
+  const excel = XLSX.readFile("export/2001.xlsx", { cellDates: true });
 
   var nameSheet = excel.SheetNames;
-  datos = XLSX.utils.sheet_to_json(excel.Sheets[nameSheet[0]]);
-  console.log(nameSheet[0]);
+  datos = XLSX.utils.sheet_to_json(excel.Sheets[nameSheet[3]]);
+  console.log(nameSheet[3]);
 };
 
 ExcelEnter();
@@ -34,8 +34,8 @@ const writeJson = () => {
   for (let index = 0; index < datos.length; index++) {
     const user = datos[index];
 
-    console.log(user.oldid)
-    dataDoc.push(user.oldid)
+    console.log(user.CEDULA, index + 1)
+    dataDoc.push(user.CEDULA)
   }
 
   const meme = JSON.stringify(dataDoc)
