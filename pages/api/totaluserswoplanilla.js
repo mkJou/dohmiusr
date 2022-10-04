@@ -106,7 +106,14 @@ handler.get(async (req, res) => {
     const element = newDoc[index];
     try {
       let docAwait = await req.db.collection('users').findOne({ CEDULA: element })
-      lopDoc.push(docAwait)
+
+
+      if (docAwait != null) {
+        lopDoc.push(docAwait)
+      } else {
+        lopDoc.push({ errAwait: newDoc[index] })
+      }
+
     } catch (error) {
       console.log('EXPORT', error)
     }

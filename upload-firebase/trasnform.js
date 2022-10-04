@@ -189,7 +189,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 170966792 },
     {
         "_id": "62f0feff4af8ac0a1c04c6c3",
         "ID": 10,
@@ -900,7 +900,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 7713729 },
     {
         "_id": "62f103ccac9a92e577a40335",
         "ID": 6,
@@ -1045,7 +1045,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 20433335 },
     {
         "_id": "62f103ccac9a92e577a40343",
         "ID": 13,
@@ -2307,8 +2307,8 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
-    
+    { "errAwait": 16622770 },
+    { "errAwait": 16189538 },
     {
         "_id": "62f0ff8ba2b6f2acbcafe03c",
         "ID": 32,
@@ -2405,7 +2405,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 14306988 },
     {
         "_id": "62f0ff8ba2b6f2acbcafe048",
         "ID": 38,
@@ -2454,7 +2454,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 25906426 },
     {
         "_id": "62f0ff8ba2b6f2acbcafe04e",
         "ID": 41,
@@ -3320,7 +3320,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 30010206 },
     {
         "_id": "62f0ff8ba2b6f2acbcafe0a0",
         "ID": 82,
@@ -3455,7 +3455,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 31316373 },
     {
         "_id": "62f0ff8ba2b6f2acbcafe0b4",
         "ID": 92,
@@ -4385,7 +4385,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 15625849 },
     {
         "_id": "62ed519f5af8116fdd2ed03b",
         "ID": 14,
@@ -4482,7 +4482,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 26780967 },
     {
         "_id": "62ed519f5af8116fdd2ed045",
         "ID": 19,
@@ -5076,7 +5076,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 12872643 },
     {
         "_id": "62ed52c53cf93a385fad7b8e",
         "ID": 14,
@@ -5530,7 +5530,7 @@ const data = [
         "ATTENDED": true,
         "COMPLETE": true
     },
-    
+    { "errAwait": 16981851 },
     {
         "_id": "62ed54b974bae0fff6aef293",
         "ID": 16,
@@ -5673,7 +5673,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 12845709 },
     {
         "_id": "62ed513a6a750d7599a6a76a",
         "ID": 11,
@@ -6128,7 +6128,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 22476856 },
     {
         "_id": "62ed513a6a750d7599a6a794",
         "ID": 32,
@@ -6722,7 +6722,7 @@ const data = [
         "ATTENDED": true,
         "COMPLETE": true
     },
-    
+    { "errAwait": 13000500 },
     {
         "_id": "62ed5421d58dac4d36a64175",
         "ID": 4,
@@ -10052,7 +10052,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 17917998 },
     {
         "_id": "62ed386a753d33289f33858a",
         "ID": 54,
@@ -10153,7 +10153,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 18286667 },
     {
         "_id": "62ed386a753d33289f338594",
         "ID": 59,
@@ -11352,7 +11352,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 29996656 },
     {
         "_id": "62ed38a7f671abff4235c6a1",
         "ID": 32,
@@ -13772,7 +13772,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 20682504 },
     {
         "_id": "62ed391de3d2103e8afa8498",
         "ID": 71,
@@ -14498,7 +14498,7 @@ const data = [
         "NOT-INCLUDED": true,
         "GPP": 1
     },
-    
+    { "errAwait": 14525464 },
     {
         "_id": "62ed3aafdd5d6f45984cfa46",
         "ID": 1,
@@ -14715,7 +14715,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 19569555 },
     {
         "_id": "62ed3aafdd5d6f45984cfa5c",
         "ID": 12,
@@ -15027,8 +15027,8 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
-    
+    { "errAwait": 21076227 },
+    { "errAwait": 19587316 },
     {
         "_id": "62ed3aafdd5d6f45984cfa80",
         "ID": 30,
@@ -16182,7 +16182,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 24955768 },
     {
         "_id": "62ed407f6be548020129c3c0",
         "ID": 3,
@@ -16255,7 +16255,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 20442476 },
     {
         "_id": "62ed407f6be548020129c3d4",
         "ID": 13,
@@ -16545,7 +16545,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 12307041 },
     {
         "_id": "62ed407f6be548020129c406",
         "ID": 38,
@@ -16714,7 +16714,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 17564424 },
     {
         "_id": "62ed407f6be548020129c420",
         "ID": 51,
@@ -16883,7 +16883,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 18120733 },
     {
         "_id": "62ed407f6be548020129c422",
         "ID": 52,
@@ -17244,7 +17244,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 16039331 },
     {
         "_id": "62ed407f6be548020129c462",
         "ID": 84,
@@ -17485,7 +17485,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 20444041 },
     {
         "_id": "62ed407f6be548020129c44c",
         "ID": 73,
@@ -17750,8 +17750,8 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
-    
+    { "errAwait": 9722385 },
+    { "errAwait": 139742047 },
     {
         "_id": "62ed407f6be548020129c46a",
         "ID": 88,
@@ -17800,7 +17800,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 23959147 },
     {
         "_id": "62ed407f6be548020129c488",
         "ID": 103,
@@ -17943,7 +17943,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 18694690 },
     {
         "_id": "62ed3b9456d1e953673b8d4c",
         "ID": 1,
@@ -18352,7 +18352,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 5814066 },
     {
         "_id": "62ed3b9456d1e953673b8d72",
         "ID": 20,
@@ -18425,8 +18425,8 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
-    
+    { "errAwait": 13072938 },
+    { "errAwait": 9749806 },
     {
         "_id": "62ed3b9456d1e953673b8d7a",
         "ID": 24,
@@ -18499,7 +18499,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 7712862 },
     {
         "_id": "62ed3b9456d1e953673b8d7e",
         "ID": 26,
@@ -18667,7 +18667,7 @@ const data = [
         "COMPLETE": false,
         "ASSIGNED": false
     },
-    
+    { "errAwait": 23454360 },
     {
         "_id": "62ed3b9456d1e953673b8d8a",
         "ID": 32,
@@ -18952,8 +18952,8 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
-    
+    { "errAwait": 4351812 },
+    { "errAwait": 9796877 },
     {
         "_id": "62ed3b9456d1e953673b8da2",
         "ID": 44,
@@ -19746,7 +19746,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 25637515 },
     {
         "_id": "62ed3b9456d1e953673b8de6",
         "ID": 78,
@@ -19915,7 +19915,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 9070563 },
     {
         "_id": "62ed3b9456d1e953673b8df6",
         "ID": 86,
@@ -20464,7 +20464,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 14136181 },
     {
         "_id": "62ed435d27d54361e63df7b9",
         "ID": 7,
@@ -21108,7 +21108,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 12440418 },
     {
         "_id": "62f3d48574046a480d05eb4c",
         "ID": 5,
@@ -21276,7 +21276,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 33576440 },
     {
         "_id": "62ed435d27d54361e63df7f9",
         "ID": 39,
@@ -21301,7 +21301,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 12256392 },
     {
         "_id": "62ed435d27d54361e63df7fd",
         "ID": 41,
@@ -21494,7 +21494,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 28467442 },
     {
         "_id": "62ed435d27d54361e63df80f",
         "ID": 50,
@@ -23435,7 +23435,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 29787434 },
     {
         "_id": "62ed42f88c95c895ffe5c894",
         "ID": 42,
@@ -23604,7 +23604,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 25343413 },
     {
         "_id": "62ed42f88c95c895ffe5c86e",
         "ID": 23,
@@ -23869,7 +23869,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 9199361 },
     {
         "_id": "62ed42f88c95c895ffe5c8c8",
         "ID": 68,
@@ -24062,7 +24062,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 4497484 },
     {
         "_id": "62ed42f88c95c895ffe5c8ce",
         "ID": 71,
@@ -29646,7 +29646,7 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
+    { "errAwait": 30472292 },
     {
         "_id": "62f107194827f6c0f27185be",
         "ID": 3,
@@ -33278,10 +33278,10 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
-    
-    
-    
+    { "errAwait": 7709417 },
+    { "errAwait": 13008214 },
+    { "errAwait": 9705956 },
+    { "errAwait": 17940517 },
     {
         "_id": "62f12dc06a92461b6c1e61be",
         "ID": 5,
@@ -33307,39 +33307,39 @@ const data = [
         "GPP": 1,
         "SEPARATOR": 1
     },
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    { "errAwait": 7831291 },
+    { "errAwait": 30952020 },
+    { "errAwait": 15602601 },
+    { "errAwait": 13243879 },
+    { "errAwait": 14736841 },
+    { "errAwait": 7889090 },
+    { "errAwait": 15178298 },
+    { "errAwait": 14922995 },
+    { "errAwait": 13299014 },
+    { "errAwait": 21166271 },
+    { "errAwait": 22365342 },
+    { "errAwait": 15058132 },
+    { "errAwait": 13879386 },
+    { "errAwait": 10866854 },
+    { "errAwait": 30359659 },
+    { "errAwait": 18281528 },
+    { "errAwait": 14375498 },
+    { "errAwait": 15749720 },
+    { "errAwait": 29983587 },
+    { "errAwait": 7802644 },
+    { "errAwait": 7972285 },
+    { "errAwait": 10425745 },
+    { "errAwait": 12972001 },
+    { "errAwait": 19705768 },
+    { "errAwait": 20234261 },
+    { "errAwait": 16353979 },
+    { "errAwait": 32430760 },
+    { "errAwait": 17070667 },
+    { "errAwait": 31425644 },
+    { "errAwait": 18119710 },
+    { "errAwait": 25778042 },
+    { "errAwait": 25404177 },
+    { "errAwait": 12786608 },
     {
         "_id": "62f3d48574046a480d05eb58",
         "ID": 11,
@@ -33364,19 +33364,19 @@ const data = [
         "ASSIGNED": false,
         "GPP": 1
     },
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    { "errAwait": 7761256 },
+    { "errAwait": 7820230 },
+    { "errAwait": 30309932 },
+    { "errAwait": 26551654 },
+    { "errAwait": 21752805 },
+    { "errAwait": 13830294 },
+    { "errAwait": 14256649 },
+    { "errAwait": 26694936 },
+    { "errAwait": 18188311 },
+    { "errAwait": 10212321 },
+    { "errAwait": 6748444 },
+    { "errAwait": 27689962 },
+    { "errAwait": 17805548 },
     {
         "_id": "62f12d3dc726aec8e11e6a11",
         "ID": 6,
@@ -33421,7 +33421,7 @@ const data = [
         "ATTENDED": true,
         "COMPLETE": true
     },
-    
+    { "errAwait": 7972285 },
     {
         "_id": "62f276d9f7f35f5173175571",
         "ID": 50,
@@ -38865,7 +38865,7 @@ const data = [
         "ATTENDED": true,
         "COMPLETE": true
     },
-    
+    { "errAwait": 30088673 },
     {
         "_id": "62f276d9f7f35f5173175563",
         "ID": 43,
@@ -38974,7 +38974,7 @@ const data = [
         "ATTENDED": true,
         "COMPLETE": true
     },
-    
+    { "errAwait": 7760259 },
     {
         "_id": "62f276d9f7f35f517317556f",
         "ID": 49,
@@ -39107,7 +39107,7 @@ const data = [
         "ATTENDED": true,
         "COMPLETE": true
     },
-    
+    { "errAwait": 7975925 },
     {
         "_id": "62f275c4f74d3ab035236756",
         "ID": 8,
@@ -41607,7 +41607,7 @@ const data = [
         "CONFIRMATION": true,
         "NEXT_LEVEL": true
     },
-    
+    { "errAwait": 7694667 },
     {
         "_id": "62f2773283d72dbef6c1e16e",
         "ID": 16,
@@ -42709,7 +42709,7 @@ const data = [
         "CONFIRMATION": true,
         "NEXT_LEVEL": false
     },
-    
+    { "errAwait": 31487478 },
     {
         "_id": "62f3d339a2b5f732e91df552",
         "ID": 58,
@@ -43668,7 +43668,7 @@ const data = [
         "CONFIRMATION": true,
         "NEXT_LEVEL": false
     },
-    
+    { "errAwait": 16017714 },
     {
         "_id": "62ed430c7857ce37988a68b7",
         "ID": 37,
@@ -44946,7 +44946,25 @@ const data = [
   '7': 152,
 */
 
-const workSheet = XLSX.utils.json_to_sheet(data);
+let counter = 1;
+
+const extracDoc = []
+const errorDocs = []
+
+for (let index = 0; index < data.length; index++) {
+    const element = data[index]
+    if (element?.errAwait) {
+        console.log(element?.errAwait)
+        errorDocs.push(element?.errAwait)
+        counter++
+    } else {
+        extracDoc.push(element)
+    }
+}
+
+console.log(extracDoc.length, errorDocs.length)
+//exportusersnotatt2
+const workSheet = XLSX.utils.json_to_sheet(errorDocs);
 const workBook = XLSX.utils.book_new();
 XLSX.utils.book_append_sheet(workBook, workSheet, "Sheet 1");
-XLSX.writeFile(workBook, "export/exportusersnotatt.xlsx");
+XLSX.writeFile(workBook, "export/exportusersnotatt2.xlsx");
